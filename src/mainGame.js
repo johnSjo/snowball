@@ -139,7 +139,7 @@ function addExplosion () {
 		var vertex = new THREE.Vector3();
 		particleGeometry.vertices.push( vertex );
 	}
-	var pMaterial = new THREE.ParticleBasicMaterial({
+	var pMaterial = new THREE.PointsMaterial({
 	  color: 0xfffafa,
 	  size: 0.2
 	});
@@ -189,7 +189,7 @@ function handleKeyDown (keyEvent){
 }
 function addHero () {
 	var sphereGeometry = new THREE.DodecahedronGeometry( heroRadius, 1);
-	var sphereMaterial = new THREE.MeshStandardMaterial( { color: 0xe5f2f2 ,shading:THREE.FlatShading } );
+	var sphereMaterial = new THREE.MeshStandardMaterial( { color: 0xe5f2f2 , flatShading: true } );
 	jumping=false;
 	heroSphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
 	heroSphere.receiveShadow = true;
@@ -204,7 +204,7 @@ function addWorld () {
 	var sides=40;
 	var tiers=40;
 	var sphereGeometry = new THREE.SphereGeometry( worldRadius, sides,tiers);
-	var sphereMaterial = new THREE.MeshStandardMaterial( { color: 0xfffafa ,shading:THREE.FlatShading } );
+	var sphereMaterial = new THREE.MeshStandardMaterial( { color: 0xfffafa , flatShading: true } );
 	
 	var vertexIndex;
 	var vertexVector= new THREE.Vector3();
@@ -311,7 +311,7 @@ function createTree () {
 	var midPointVector= new THREE.Vector3();
 	var vertexVector= new THREE.Vector3();
 	var treeGeometry = new THREE.ConeGeometry( 0.5, 1, sides, tiers);
-	var treeMaterial = new THREE.MeshStandardMaterial( { color: 0x33ff33,shading:THREE.FlatShading  } );
+	var treeMaterial = new THREE.MeshStandardMaterial( { color: 0x33ff33, flatShading: true  } );
 	var offset;
 	midPointVector=treeGeometry.vertices[0].clone();
 	var currentTier=0;
@@ -328,7 +328,7 @@ function createTree () {
 	treeTop.position.y=0.9;
 	treeTop.rotation.y=(Math.random()*(Math.PI));
 	var treeTrunkGeometry = new THREE.CylinderGeometry( 0.1, 0.1,0.5);
-	var trunkMaterial = new THREE.MeshStandardMaterial( { color: 0x886633,shading:THREE.FlatShading  } );
+	var trunkMaterial = new THREE.MeshStandardMaterial( { color: 0x886633, flatShading: true  } );
 	var treeTrunk = new THREE.Mesh( treeTrunkGeometry, trunkMaterial );
 	treeTrunk.position.y=0.25;
 	var tree =new THREE.Object3D();
