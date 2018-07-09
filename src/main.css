@@ -80,6 +80,10 @@ body {
     cursor: pointer;
 }
 
+#startGame:hover {
+    font-weight: bold;
+}
+
 #gameOver {
     display: none;
     justify-content: center;
@@ -94,6 +98,7 @@ body {
 #splashScoreBar {
     margin-bottom: 20px;
 }
+
 #splashScoreBar .scoreBar {
     height: 30px;
 }

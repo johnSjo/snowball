@@ -14,7 +14,6 @@ export default {
         };
 
         pubsub.subscribe('treeHit', () => {
-            console.log('you hit a tree');
 
             // update lives left
             pubsub.publish('livesLeft', --lives);
