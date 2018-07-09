@@ -280,7 +280,8 @@ function addTree (inPath, row, isLeft){
 	var newTree;
 	if(inPath){
 		if(treesPool.length==0)return;
-		newTree=treesPool.pop();
+        newTree=treesPool.pop();
+        newTree.hit = false;
 		newTree.visible=true;
 		//console.log("add tree");
 		treesInPath.push(newTree);
@@ -416,9 +417,11 @@ function doTreeLogic () {
 		if(treePos.z>6 &&oneTree.visible){//gone out of our view zone
 			treesToRemove.push(oneTree);
 		}else{//check collision
-			if(treePos.distanceTo(heroSphere.position)<=0.6){
+			if(!oneTree.hit && treePos.distanceTo(heroSphere.position)<=0.6){
                 // console.log("hit");
                 pubsub.publish('treeHit');
+                oneTree.hit = true;
+
 				hasCollided=true;
 				explode();
 			}
