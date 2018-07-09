@@ -1,6 +1,8 @@
 
 const LIVES = 3;
 
+const SCORING_SPEED = 1000;
+
 export default {
     init (pubsub) {
 
@@ -41,7 +43,7 @@ export default {
                 score.top = Math.max(score.current, score.top);
 
                 pubsub.publish('scoreUpdate', score);
-            }, 1000);
+            }, SCORING_SPEED);
 
         });
     }
