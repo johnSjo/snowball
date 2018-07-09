@@ -123,15 +123,15 @@ function createScene () {
 	// scoreText.style.left = 10 + 'px';
 	// document.body.appendChild(scoreText);
   
-  var infoText = document.createElement('div');
-	infoText.style.position = 'absolute';
-	infoText.style.width = 100;
-	infoText.style.height = 100;
-	infoText.style.backgroundColor = "yellow";
-	infoText.innerHTML = "UP - Jump, Left/Right - Move";
-	infoText.style.top = 10 + 'px';
-	infoText.style.left = 10 + 'px';
-	document.body.appendChild(infoText);
+//   var infoText = document.createElement('div');
+// 	infoText.style.position = 'absolute';
+// 	infoText.style.width = 100;
+// 	infoText.style.height = 100;
+// 	infoText.style.backgroundColor = "yellow";
+// 	infoText.innerHTML = "UP - Jump, Left/Right - Move";
+// 	infoText.style.top = 10 + 'px';
+// 	infoText.style.left = 10 + 'px';
+// 	document.body.appendChild(infoText);
 }
 function addExplosion () {
 	particleGeometry = new THREE.Geometry();
