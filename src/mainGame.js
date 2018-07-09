@@ -28,7 +28,7 @@ var clock;
 var jumping;
 var treeReleaseInterval=0.5;
 var lastTreeReleaseTime=0;
-var treesInPath;
+var treesInPath = [];
 var treesPool;
 var particleGeometry;
 var particleCount=20;
@@ -39,19 +39,34 @@ var scoreText;
 var score;
 var hasCollided;
 
+let pubsub;
+
 export default {
 
-    init () {
+    init (PubSub) {
+
+        pubsub = PubSub;
+
+        pubsub.subscribe('startGame', () => {
+            // make sure we don't have any trees in our path at start of the game
+            treesInPath.splice(0).forEach((tree) => {
+                tree.visible = false;
+
+                treesPool.push(tree);
+            });
+        });
+
         // set up the scene
         createScene();
-    
+
         //call game loop
         update();
+
     }
 };
 
 
-function createScene (){
+function createScene () {
 	hasCollided=false;
 	score=0;
 	treesInPath=[];
@@ -118,7 +133,7 @@ function createScene (){
 	infoText.style.left = 10 + 'px';
 	document.body.appendChild(infoText);
 }
-function addExplosion (){
+function addExplosion () {
 	particleGeometry = new THREE.Geometry();
 	for (var i = 0; i < particleCount; i ++ ) {
 		var vertex = new THREE.Vector3();
@@ -132,7 +147,7 @@ function addExplosion (){
 	scene.add( particles );
 	particles.visible=false;
 }
-function createTreesPool (){
+function createTreesPool () {
 	var maxTreesInPool=10;
 	var newTree;
 	for(var i=0; i<maxTreesInPool;i++){
@@ -172,7 +187,7 @@ function handleKeyDown (keyEvent){
 		bounceValue=0.06;
 	}
 }
-function addHero (){
+function addHero () {
 	var sphereGeometry = new THREE.DodecahedronGeometry( heroRadius, 1);
 	var sphereMaterial = new THREE.MeshStandardMaterial( { color: 0xe5f2f2 ,shading:THREE.FlatShading } );
 	jumping=false;
@@ -185,7 +200,7 @@ function addHero (){
 	currentLane=middleLane;
 	heroSphere.position.x=currentLane;
 }
-function addWorld (){
+function addWorld () {
 	var sides=40;
 	var tiers=40;
 	var sphereGeometry = new THREE.SphereGeometry( worldRadius, sides,tiers);
@@ -230,7 +245,7 @@ function addWorld (){
 	rollingGroundSphere.position.z=2;
 	addWorldTrees();
 }
-function addLight (){
+function addLight () {
 	var hemisphereLight = new THREE.HemisphereLight(0xfffafa,0x000000, .9);
 	scene.add(hemisphereLight);
 	sun = new THREE.DirectionalLight( 0xcdc1c5, 0.9);
@@ -243,7 +258,7 @@ function addLight (){
 	sun.shadow.camera.near = 0.5;
 	sun.shadow.camera.far = 50 ;
 }
-function addPathTree (){
+function addPathTree () {
 	var options=[0,1,2];
 	var lane= Math.floor(Math.random()*3);
 	addTree(true,lane);
@@ -253,7 +268,7 @@ function addPathTree (){
 		addTree(true,options[lane]);
 	}
 }
-function addWorldTrees (){
+function addWorldTrees () {
 	var numTrees=36;
 	var gap=6.28/36;
 	for(var i=0;i<numTrees;i++){
@@ -288,7 +303,7 @@ function addTree (inPath, row, isLeft){
 	
 	rollingGroundSphere.add(newTree);
 }
-function createTree (){
+function createTree () {
 	var sides=8;
 	var tiers=6;
 	var scalarMultiplier=(Math.random()*(0.25-0.1))+0.05;
@@ -366,7 +381,7 @@ function tightenTree (vertices,sides,currentTier){
 	}
 }
 
-function update (){
+function update () {
 	//stats.update();
     //animate
     rollingGroundSphere.rotation.x += rollingSpeed;
@@ -391,7 +406,7 @@ function update (){
     render();
 	requestAnimationFrame(update);//request next update
 }
-function doTreeLogic (){
+function doTreeLogic () {
 	var oneTree;
 	var treePos = new THREE.Vector3();
 	var treesToRemove=[];
@@ -402,7 +417,8 @@ function doTreeLogic (){
 			treesToRemove.push(oneTree);
 		}else{//check collision
 			if(treePos.distanceTo(heroSphere.position)<=0.6){
-				console.log("hit");
+                // console.log("hit");
+                pubsub.publish('treeHit');
 				hasCollided=true;
 				explode();
 			}
@@ -415,10 +431,10 @@ function doTreeLogic (){
 		treesInPath.splice(fromWhere,1);
 		treesPool.push(oneTree);
 		oneTree.visible=false;
-		console.log("remove tree");
+		// console.log("remove tree");
 	});
 }
-function doExplosionLogic (){
+function doExplosionLogic () {
 	if(!particles.visible)return;
 	for (var i = 0; i < particleCount; i ++ ) {
 		particleGeometry.vertices[i].multiplyScalar(explosionPower);
@@ -430,7 +446,7 @@ function doExplosionLogic (){
 	}
 	particleGeometry.verticesNeedUpdate = true;
 }
-function explode (){
+function explode () {
 	particles.position.y=2;
 	particles.position.z=4.8;
 	particles.position.x=heroSphere.position.x;
@@ -444,7 +460,7 @@ function explode (){
 	explosionPower=1.07;
 	particles.visible=true;
 }
-function render (){
+function render () {
     renderer.render(scene, camera);//draw
 }
 function gameOver () {
