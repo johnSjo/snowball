@@ -21,8 +21,8 @@
         </div>
         <div id='score'>
             <span>Score</span>
-            <div id='scoreBar'>
-                <div id='bar'></div>
+            <div class='scoreBar' id='hudScoreBar'>
+                <div class='bar' id='hudBar'></div>
             </div>
             <div id='scoreNr'>0</div>
         </div>
@@ -31,7 +31,19 @@
             <div id='topScoreNr'>0</div>
         </div>
     </div>
-    <div id='splash'></div>
+    <div id='splash'>
+        <div id='gameOver'>
+            <h1>GAME OVER</h1>
+            <h2 id='newHighScore'>New record! [x]m travelled</h2>
+            <div id='splashScoreBar'>
+                <h3>Progress</h3>
+                <div class='scoreBar'>
+                    <div class='bar' id='splashBar'></div>
+                </div>
+            </div>
+        </div>
+        <div id='startGame'>Start a new game</div>
+    </div>
 
     <script src="index.js"></script>
 </body>

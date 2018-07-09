@@ -3,9 +3,10 @@ function createHud () {
     // for now -> just get the dom elements
 
     return {
+        container: document.getElementById('hud'),
         livesLeft: document.getElementById('livesLeft'),
-        scoreBar: document.getElementById('scoreBar'),
-        bar: document.getElementById('bar'),
+        scoreBar: document.getElementById('hudScoreBar'),
+        bar: document.getElementById('hudBar'),
         scoreNr: document.getElementById('scoreNr'),
         topScoreNr: document.getElementById('topScoreNr')
     };
@@ -42,10 +43,18 @@ export default {
         });
 
         pubsub.subscribe('startGame', () => {
+            hud.container.style.display = 'flex';
+
             // reset hud
             hud.bar.style.width = '100%';
             hud.scoreBar.style.display = 'block';
             hud.scoreNr.style.display = 'none';
+            topScoreReached = false;
         });
+
+        pubsub.subscribe('allLivesSpent', () => {
+            hud.container.style.display = 'none';
+        });
+
     }
 };

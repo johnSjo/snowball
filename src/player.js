@@ -9,7 +9,7 @@ export default {
         let lives;
         const score = {
             current: 0,
-            top: 100,
+            top: 0,
             counter: null
         };
 
