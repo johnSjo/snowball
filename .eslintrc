@@ -1,0 +1,17 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "modules": true,
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "rules": {
+        "object-curly-spacing": ["error", "always"],
+        "space-before-function-paren": ["error", "always"],
+        "dot-location": ["error", "property"],
+        "no-underscore-dangle": 0,
+        "semi": ["error", "always"]
+    }
+}
