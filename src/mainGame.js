@@ -86,7 +86,7 @@ function createScene () {
     renderer.shadowMap.enabled = true;//enable shadow
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.setSize( sceneWidth, sceneHeight );
-    dom = document.getElementById('TutContainer');
+    dom = document.getElementById('game');
 	dom.appendChild(renderer.domElement);
 	//stats = new Stats();
 	//dom.appendChild(stats.dom);

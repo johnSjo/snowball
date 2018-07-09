@@ -4,9 +4,7 @@ export default {
         // create a 'start game' splash and a 'game over' splash
 
         // TEMP
-        setTimeout(() => {
-            pubsub.publish('startGame');
-        }, 2000);
+        pubsub.publish('startGame');
         
         pubsub.subscribeOnce('gameReady', () => {
             // show 'start game' splash and game canvas

@@ -1,7 +1,7 @@
 
 const LIVES = 3;
 
-const SCORING_SPEED = 1000;
+const SCORING_SPEED = 100;
 
 export default {
     init (pubsub) {
@@ -9,7 +9,7 @@ export default {
         let lives;
         const score = {
             current: 0,
-            top: 0,
+            top: 100,
             counter: null
         };
 
@@ -17,7 +17,7 @@ export default {
             console.log('you hit a tree');
 
             // update lives left
-            pubsub.publish('livesLeft', lives--);
+            pubsub.publish('livesLeft', --lives);
 
             if (lives < 1) {
                 // stop the score counter
